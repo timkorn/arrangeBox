@@ -116,6 +116,13 @@ export class ArrangeControl {
         }
     }
 
+    handleClear() {
+        this.values = [];
+        this.chosenElementIndexes = [];
+        this.searchString = "";
+        this.render();
+    }
+
     afterRender() {
         const element = document.querySelector<HTMLDivElement>(this.id);
         const buttonContainer = document.querySelector<HTMLDivElement>(this.buttonContainerId);
@@ -126,6 +133,8 @@ export class ArrangeControl {
             buttonUp?.addEventListener("click", this.handleUp.bind(this));
             const buttonDown = buttonContainer.querySelector<HTMLDivElement>("#buttonDown");
             buttonDown?.addEventListener("click", this.handleDown.bind(this));
+            const buttonClear = buttonContainer.querySelector<HTMLDivElement>("#buttonClear");
+            buttonClear?.addEventListener("click", this.handleClear.bind(this));
         }
         if (element) {
             const nodes = element.childNodes;
@@ -150,13 +159,14 @@ export class ArrangeControl {
                 values = values.filter((item) => item.name.toLowerCase().includes(this.searchString.toLowerCase()));
             }
             element.innerHTML = values.
-                map((item, i) => `<div class='playerItem ${this.chosenElementIndexes.includes(i) && "itemChosen"}' id=${i}><img src=${item.name}/> <h4>${item.name}</h4></div>`).
+                map((item, i) => `<div class='playerItem ${this.chosenElementIndexes.includes(i) && "itemChosen"}' id=${i}><img src=${item.image} alt="${item.name}" /> <h4>${item.name}</h4></div>`).
                 reduce((prev, cur) => prev + cur, "");
         }
         if (buttonsContainer) {
             buttonsContainer.innerHTML = `
                 <button id="buttonUp"> up </button>
                 <button id="buttonDown"> down </button>
+                <button id="buttonClear"> clear </button>
             `;
         }
         if (inputContainer) {
