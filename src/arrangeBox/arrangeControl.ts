@@ -176,6 +176,14 @@ export class ArrangeControl {
                 value = input.value;
             }
             inputContainer.innerHTML = `<input placeholder='search'id='search' value="${value}" />`;
+            if (this.searchString) {
+                const text = document.createElement('span');
+                text.innerText = "Search by: " + this.searchString;
+                text.style.position = "absolute";
+                text.style.bottom = "-6px";
+                text.style.left = "0px";
+                inputContainer.appendChild(text)
+            }
         }
         this.afterRender();
     }
