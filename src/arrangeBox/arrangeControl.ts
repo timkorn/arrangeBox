@@ -10,6 +10,7 @@ export class ArrangeControl {
     private chosenElementIndexes: number[];
     private searchString = "";
     private inputContainerId: string;
+    private searchValuesLength = 0;
 
     constructor(parent: HTMLDivElement, initialValues: TFootballers, title: string, controlId: string, direction: "l" | "r", context: ArrangeBox) {
         this.chosenElementIndexes = [];
@@ -90,7 +91,7 @@ export class ArrangeControl {
 
     handleDown() {
         if (this.chosenElementIndexes.length === 1) {
-            if (this.chosenElementIndexes[0] < this.values.length - 1) {
+            if (this.searchString && this.chosenElementIndexes[0] < this.searchValuesLength - 1 || !this.searchString && this.chosenElementIndexes[0] < this.values.length - 1) {
                 const index = this.chosenElementIndexes[0];
                 [this.values[index], this.values[index + 1]] = [this.values[index + 1], this.values[index]];
                 this.chosenElementIndexes[0] += 1;
@@ -157,6 +158,7 @@ export class ArrangeControl {
             let values = this.values;
             if (this.searchString) {
                 values = values.filter((item) => item.name.toLowerCase().includes(this.searchString.toLowerCase()));
+                this.searchValuesLength = values.length;
             }
             element.innerHTML = values.
                 map((item, i) => `<div class='playerItem ${this.chosenElementIndexes.includes(i) && "itemChosen"}' id=${i}><img src=${item.image} alt="${item.name}" /> <h4>${item.name}</h4></div>`).
