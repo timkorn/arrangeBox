@@ -54,8 +54,8 @@ export class ArrangeControl {
         this.values = [...this.values, ...val]
     }
 
-    onItemClick(e) {
-        const targetElement = e.currentTarget;
+    onItemClick(e: MouseEvent) {
+        const targetElement = e.currentTarget as HTMLDivElement;
         if (targetElement) {
             const id = Number(targetElement.id);
             if (Number.isInteger(id)) {
@@ -130,7 +130,7 @@ export class ArrangeControl {
         if (element) {
             const nodes = element.childNodes;
             for (let i = 0; i < nodes.length; i++) {
-                nodes[i].addEventListener("click", (e) => { this.onItemClick(e) });
+                nodes[i].addEventListener("click", (e) => { this.onItemClick(e as MouseEvent) });
             }
         }
         if (inputContainer) {
